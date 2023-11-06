@@ -1,4 +1,4 @@
-import { isReadonly, reactive, readonly } from "../reactive"
+import { isProxy, isReadonly, reactive, readonly } from "../reactive"
 
 describe("readonly", () => {
   it("happy path", () => {
@@ -8,6 +8,7 @@ describe("readonly", () => {
     expect(read.foo).toBe(1)
     expect(isReadonly(read)).toBe(true)
     expect(isReadonly(origin)).toBe(false)
+    expect(isProxy(read)).toBe(true)
   })
   it('cannot be setted', () => {
     console.warn = jest.fn()

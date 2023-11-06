@@ -7,8 +7,10 @@ describe("effect", () => {
     const object = reactive({ foo: 1 })
 
     let age = 0
+    let dummy
     effect(() => {
       age ++
+      dummy = object.foo
     })
 
     expect(age).toBe(1)
@@ -67,7 +69,7 @@ describe("effect", () => {
     // Q: 如何破解？
     // A: shouldTrack
     object.num++
-    expect(dim).toBe(4)
+    expect(dim).toBe(3)
   })
   it("onStop", () => {
     let object = reactive({ num: 1})

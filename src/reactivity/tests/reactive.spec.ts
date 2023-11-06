@@ -1,4 +1,4 @@
-import { isReactive, reactive } from "../reactive"
+import { isProxy, isReactive, reactive } from "../reactive"
 // import {  } from "../baseHandlers"
 describe('reactive', () => {
   it('happy path', () => {
@@ -8,6 +8,7 @@ describe('reactive', () => {
     expect(object.bar).toBe(2)
     expect(isReactive(object)).toBe(true)
     expect(isReactive(origin)).toBe(false)
+    expect(isProxy(object)).toBe(true)
   })
   it("nested reactive", () => {
     const origin = {

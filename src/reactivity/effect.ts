@@ -1,13 +1,13 @@
 import { extend } from "../shared"
 let activeEffect:any
-let shouldTrack:boolean = true
-class ReactiveEffect {
+let shouldTrack:boolean = false
+export class ReactiveEffect {
   private _fn: any
   public _scheduler:any
   public deps:any = []
   private active:any = false
   private onStop?: () => void
-  constructor(fn:any, scheduler:any) {
+  constructor(fn:any, scheduler?:any) {
     this._fn = fn
     this._scheduler = scheduler
   }
@@ -17,9 +17,9 @@ class ReactiveEffect {
       return
     }
     activeEffect = this
-    shouldTrack = false
-    const result = this._fn()
     shouldTrack = true
+    const result = this._fn()
+    shouldTrack = false
     return result
   }
   stop() {
@@ -65,18 +65,26 @@ export function track(target:any, key:any) {
     dep = new Set()
     depsMap.set(key, dep)
   }
+  trackEffects(dep)
+}
+
+export function trackEffects(dep: any) {
   if(dep.has(activeEffect)) return
   dep.add(activeEffect)
   activeEffect.deps.push(dep)
 }
 
-function isTracking() {
+export function isTracking() {
   return shouldTrack && activeEffect !== undefined
 }
 
 export function trigger(target:any, key:any) {
   const deps = targetMap.get(target)
   const dep = deps.get(key)
+  triggerEffects(dep)
+}
+
+export function triggerEffects(dep:any) {
   for(const effect of dep) {
     if(effect._scheduler) {
       effect._scheduler()
