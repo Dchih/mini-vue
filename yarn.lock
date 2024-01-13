@@ -1221,6 +1221,13 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@rollup/plugin-json@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.npmmirror.com/@rollup/plugin-json/-/plugin-json-6.1.0.tgz#fbe784e29682e9bb6dee28ea75a1a83702e7b805"
+  integrity sha512-EGI2te5ENk1coGeADSIwZ7G2Q8CJS2sF120T7jLw4xFw9n7wIOXHo+kIYRAoVpJAN+kmqZSoO3Fp4JtoNF4ReA==
+  dependencies:
+    "@rollup/pluginutils" "^5.1.0"
+
 "@rollup/plugin-typescript@^11.1.5":
   version "11.1.5"
   resolved "https://registry.npmmirror.com/@rollup/plugin-typescript/-/plugin-typescript-11.1.5.tgz#039c763bf943a5921f3f42be255895e75764cb91"
@@ -1229,7 +1236,7 @@
     "@rollup/pluginutils" "^5.0.1"
     resolve "^1.22.1"
 
-"@rollup/pluginutils@^5.0.1":
+"@rollup/pluginutils@^5.0.1", "@rollup/pluginutils@^5.1.0":
   version "5.1.0"
   resolved "https://registry.npmmirror.com/@rollup/pluginutils/-/pluginutils-5.1.0.tgz#7e53eddc8c7f483a4ad0b94afb1f7f5fd3c771e0"
   integrity sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==
