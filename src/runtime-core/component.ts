@@ -1,3 +1,5 @@
+import { componentStatefulHandler } from "./componentStatefulHandler"
+
 export function createComponentInstance(vnode) {
   const component =  {
     vnode,
@@ -15,6 +17,8 @@ export function setupComponent(instance) {
 
 function setupStatefulComponent(instance) {
   const Component = instance.type
+
+  instance.proxy = new Proxy({_:instance}, componentStatefulHandler)
 
   const setup = Component.setup
   if(setup) {
