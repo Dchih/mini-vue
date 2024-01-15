@@ -4,12 +4,15 @@ export const optionsKeyMap = {
 
 export const componentStatefulHandler = {
   get({_:instance}, key) {
-    const { setupState } = instance
-      if(key in setupState) {
-        return setupState[key]
-      }
-      if(key in optionsKeyMap) {
-        return optionsKeyMap[key](instance)
-      }
+    const { setupState, props } = instance
+    const hasOwn = (val, key) => Object.prototype.hasOwnProperty.call(val, key)
+    if(hasOwn(setupState, key)) {
+      return setupState[key]
+    } else if(hasOwn(props, key)) {
+      return props[key]
+    }
+    if(key in optionsKeyMap) {
+      return optionsKeyMap[key](instance)
+    }
   }
 }
