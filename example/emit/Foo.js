@@ -1,18 +1,10 @@
 import { h } from "../../lib/guide-mini-vue.esm.js";
+import { renderSlots } from "../../lib/guide-mini-vue.esm.js";
 
 export const Foo = {
-  setup(props, { emit }) {
-    function clickButton() {
-      emit('add')
-      emit('add-foo')
-    }
-    return {
-      clickButton
-    }
-  },
+  setup() {},
   render() {
-    return h('button', {
-      onClick: this.clickButton
-    }, 'emitButton')
+    const foo = h('p', {}, 'foo')
+    return h('div', {id: 'foo'}, [renderSlots(this.$slots, 'footer', { age: 18 }), foo, renderSlots(this.$slots, 'header')])
   }
 }

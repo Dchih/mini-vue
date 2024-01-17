@@ -1,5 +1,6 @@
 export const optionsKeyMap = {
-  $el: instance => instance.vnode.el
+  $el: instance => instance.vnode.el,
+  $slots: instance => instance.slots
 }
 
 export const componentStatefulHandler = {

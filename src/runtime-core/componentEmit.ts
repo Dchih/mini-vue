@@ -1,5 +1,4 @@
 export function emit(instance, event) {
-  console.log('emit ', event)
   const { props } = instance
 
   const camelize = (str: string) => {
