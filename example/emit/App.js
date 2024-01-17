@@ -1,8 +1,8 @@
-import { h } from "../../lib/guide-mini-vue.esm.js"
+import { h, createTextNode, getCurrentInstance } from "../../lib/guide-mini-vue.esm.js"
 import { Foo } from "./Foo.js"
-import { createTextNode } from "../../lib/guide-mini-vue.esm.js"
 
 export const App = {
+  name: 'app',
   render() {
     const app = h('div', {}, 'app')
     const foo = h(Foo, {}, {
@@ -15,6 +15,7 @@ export const App = {
     return h('div', {}, [app, foo])
   },
   setup() {
+    console.log('App: ', getCurrentInstance())
     return {
     }
   }
