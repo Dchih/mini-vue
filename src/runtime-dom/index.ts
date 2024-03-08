@@ -1,12 +1,10 @@
 import { createRenderer } from "../runtime-core/renderer";
 
 function createElement(type) {
-  console.log("createElement-----------------");
   return document.createElement(type);
 }
 
 function patchProp(el, key, val) {
-  console.log("patch---------------------");
   const isOn = (key) => /^on[A-Z]/.test(key);
   const getEventName = (key) => key.slice(2).toLowerCase();
   if (isOn(key)) {
@@ -17,7 +15,6 @@ function patchProp(el, key, val) {
 }
 
 function insert(el, container) {
-  console.log("insert---------------------");
   container.append(el);
 }
 

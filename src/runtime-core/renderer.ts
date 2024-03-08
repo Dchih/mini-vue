@@ -1,3 +1,4 @@
+import { effect } from "../reactivity/effect";
 import { ShapeFlag } from "../shared/shapeFlag";
 import { createComponentInstance, setupComponent } from "./component";
 import { createAppApi } from "./createApp";
@@ -10,30 +11,30 @@ export function createRenderer(options) {
     insert: hostInsert,
   } = options;
   function render(vnode, container) {
-    patch(vnode, container, undefined);
+    patch(null, vnode, container, undefined);
   }
 
-  function patch(vnode, container, parentComponent) {
-    const { shapeFlag, type } = vnode;
+  function patch(n1, n2, container, parentComponent) {
+    const { shapeFlag, type } = n2;
     switch (type) {
       case Fragment:
-        processFragment(vnode, container, parentComponent);
+        processFragment(n1, n2, container, parentComponent);
         break;
       case Text:
-        processText(vnode, container);
+        processText(n1, n2, container);
         break;
       default:
         if (ShapeFlag.ELEMENT & shapeFlag) {
-          processElement(vnode, container, parentComponent);
+          processElement(n1, n2, container, parentComponent);
         } else if (ShapeFlag.STATEFUL_COMPONENT & shapeFlag) {
-          processComponent(vnode, container, parentComponent);
+          processComponent(n1, n2, container, parentComponent);
         }
         break;
     }
   }
 
-  function processComponent(vnode, container, parentComponent) {
-    mountComponent(vnode, container, parentComponent);
+  function processComponent(n1, n2, container, parentComponent) {
+    mountComponent(n2, container, parentComponent);
   }
 
   function mountComponent(initailVNode, container, parentComponent) {
@@ -43,8 +44,18 @@ export function createRenderer(options) {
     setupRenderEffect(instance, initailVNode, container);
   }
 
-  function processElement(vnode: any, container: any, parentComponent) {
-    mountElement(vnode, container, parentComponent);
+  function processElement(n1, n2: any, container: any, parentComponent) {
+    if (!n1) {
+      mountElement(n2, container, parentComponent);
+    } else {
+      patchElement(n1, n2, container);
+    }
+  }
+
+  function patchElement(n1, n2, container) {
+    console.log("patchElement");
+    console.log("n1: ", n1);
+    console.log("n2: ", n2);
   }
 
   function mountElement(vnode: any, container: any, parentComponent) {
@@ -75,24 +86,36 @@ export function createRenderer(options) {
 
   function mountChildren(vnode, el: any, parentComponent) {
     vnode.children.forEach((v) => {
-      patch(v, el, parentComponent);
+      patch(null, v, el, parentComponent);
     });
   }
 
-  function setupRenderEffect(instance, initailVNode, container) {
-    const { proxy } = instance;
-    const subTree = instance.render.call(proxy);
-    patch(subTree, container, instance);
-    initailVNode.el = subTree.el;
-  }
-  function processFragment(vnode: any, container: any, parentComponent) {
-    mountChildren(vnode, container, parentComponent);
+  function processFragment(n1, n2: any, container: any, parentComponent) {
+    mountChildren(n2, container, parentComponent);
   }
 
-  function processText(vnode: any, container: any) {
-    const { children } = vnode;
-    const textNode = (vnode.el = document.createTextNode(children));
+  function processText(n1, n2: any, container: any) {
+    const { children } = n2;
+    const textNode = (n2.el = document.createTextNode(children));
     container.append(textNode);
+  }
+
+  function setupRenderEffect(instance, initailVNode, container) {
+    effect(() => {
+      if (!instance.isMounted) {
+        const { proxy } = instance;
+        const subTree = (instance.subTree = instance.render.call(proxy));
+        patch(null, subTree, container, instance);
+        initailVNode.el = subTree.el;
+        instance.isMounted = true;
+      } else {
+        const { proxy } = instance;
+        const subTree = instance.render.call(proxy);
+        const prevSubTree = instance.subTree;
+        instance.subTree = subTree;
+        patch(prevSubTree, subTree, container, instance);
+      }
+    });
   }
   return {
     createApp: createAppApi(render),
