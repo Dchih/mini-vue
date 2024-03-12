@@ -43,13 +43,13 @@ import { h, ref } from "../../lib/guide-mini-vue.esm.js";
 // 新比老多-add 右到左
 //   a b
 // c a b
-const prevArray = [h("div", { key: "A" }, "A"), h("div", { key: "B" }, "B")];
-const nextArray = [
-  h("div", { key: "C" }, "C"),
-  h("div", { key: "D" }, "D"),
-  h("div", { key: "A" }, "A"),
-  h("div", { key: "B" }, "B"),
-];
+// const prevArray = [h("div", { key: "A" }, "A"), h("div", { key: "B" }, "B")];
+// const nextArray = [
+//   h("div", { key: "C" }, "C"),
+//   h("div", { key: "D" }, "D"),
+//   h("div", { key: "A" }, "A"),
+//   h("div", { key: "B" }, "B"),
+// ];
 
 // 老比新多-del 左到右
 // a b c
@@ -68,6 +68,48 @@ const nextArray = [
 //   h("div", { key: "B" }, "B"),
 // ];
 // const nextArray = [h("div", { key: "A" }, "A"), h("div", { key: "B" }, "B")];
+
+// const prevArray = [
+//   h("div", { key: "A" }, "A"),
+//   h("div", { key: "B", id: "bprev" }, "B"),
+//   h("div", { key: "C" }, "C"),
+//   h("div", { key: "D" }, "D"),
+//   h("div", { key: "E" }, "E"),
+//   h("div", { key: "F" }, "F"),
+//   h("div", { key: "H" }, "H"),
+// ];
+// const nextArray = [
+//   h("div", { key: "A" }, "A"),
+//   h("div", { key: "B", id: "bnext" }, "B"),
+//   h("div", { key: "E" }, "E"),
+//   h("div", { key: "D" }, "D"),
+//   h("div", { key: "F" }, "F"),
+//   h("div", { key: "H" }, "H"),
+// ];
+
+// 综合
+const prevArray = [
+  h("div", { key: "A" }, "A"),
+  h("div", { key: "B", id: "bprev" }, "B"),
+  h("div", { key: "C" }, "C"),
+  h("div", { key: "D" }, "D"),
+  h("div", { key: "E" }, "E"),
+  h("div", { key: "Z" }, "Z"),
+  h("div", { key: "F" }, "F"),
+  h("div", { key: "G" }, "G"),
+  h("div", { key: "H" }, "H"),
+];
+const nextArray = [
+  h("div", { key: "A" }, "A"),
+  h("div", { key: "B", id: "bnext" }, "B"),
+  h("div", { key: "D" }, "D"),
+  h("div", { key: "C" }, "C"),
+  h("div", { key: "Y" }, "Y"),
+  h("div", { key: "E" }, "E"),
+  h("div", { key: "F" }, "F"),
+  h("div", { key: "G" }, "G"),
+  h("div", { key: "H" }, "H"),
+];
 
 export const arrayToArray = {
   setup() {
