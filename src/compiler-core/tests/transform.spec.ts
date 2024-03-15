@@ -1,6 +1,6 @@
-import { NodeTypes } from "../ast";
-import { baseParser } from "../parser";
-import { transform } from "../transform";
+import { NodeTypes } from "../src/ast";
+import { baseParser } from "../src/parser";
+import { transform } from "../src/transform";
 
 describe("transform", () => {
   test("happy path", () => {
@@ -11,7 +11,7 @@ describe("transform", () => {
       }
     };
     transform(ast, {
-      nodeTransform: [plugin],
+      nodeTransforms: [plugin],
     });
 
     const nodeText = ast.children[0].children[0].content;
