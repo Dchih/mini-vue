@@ -9,14 +9,21 @@ export function transform(root, options = {}) {
 }
 
 function createRootCodegen(ast) {
-  ast.codegen = ast.children[0];
+  const child = ast.children[0];
+  if (child.type === NodeTypes.ELEMENT) {
+    ast.codegen = child.codegen;
+  } else {
+    ast.codegen = ast.children[0];
+  }
 }
 
 function traverseNode(node: any, context) {
   const { nodeTransforms } = context;
+  const onExits = [] as any[];
   for (let i = 0; i < nodeTransforms.length; i++) {
     const transform = nodeTransforms[i];
-    transform(node);
+    const exitFn = transform(node, context);
+    if (exitFn) onExits.push(exitFn);
   }
 
   switch (node.type) {
@@ -29,6 +36,11 @@ function traverseNode(node: any, context) {
       break;
     default:
       break;
+  }
+
+  let i = onExits.length;
+  while (i--) {
+    onExits[i]();
   }
 }
 

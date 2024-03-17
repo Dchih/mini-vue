@@ -81,7 +81,7 @@ describe("effect", () => {
     let object = reactive({ num: 1 });
     let dim = 0;
     let onStopFn = jest.fn(() => {
-      console.log("执行onStopFn");
+      // console.log("执行onStopFn");
     });
     const runner = effect(
       () => {

@@ -311,7 +311,6 @@ export function createRenderer(options) {
           initailVNode.el = subTree.el;
           instance.isMounted = true;
         } else {
-          console.log("update------------------");
           const { next, vnode } = instance;
           if (next) {
             next.el = vnode.el;

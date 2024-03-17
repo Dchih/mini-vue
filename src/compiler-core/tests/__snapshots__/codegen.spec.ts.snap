@@ -1,5 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`generate code element 1`] = `
+"const { createElementBlock:_createElementBlock } = Vue
+return function render(_ctx, _cache) {return _createElementBlock('div', null, null)}"
+`;
+
 exports[`generate code interpolation 1`] = `
 "const { toDisplayString:_toDisplayString } = Vue
 return function render(_ctx, _cache) {return _toDisplayString(_ctx.message)}"
@@ -8,4 +13,9 @@ return function render(_ctx, _cache) {return _toDisplayString(_ctx.message)}"
 exports[`generate code string 1`] = `
 "
 return function render(_ctx, _cache) {return 'hi'}"
+`;
+
+exports[`generate code union type 1`] = `
+"const { toDisplayString:_toDisplayString, createElementBlock:_createElementBlock } = Vue
+return function render(_ctx, _cache) {return _createElementBlock('div', null, 'hi,' + _toDisplayString(_ctx.message))}"
 `;
